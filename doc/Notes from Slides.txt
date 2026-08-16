@@ -1,0 +1,27 @@
+
+***For Final product specifications***
+
+I want to start learning the synthesizable parts of system verilog
+2 x 2 bi-torus
+xy routing - first go down the go right
+collision: use backpressure - each router accepts packet in input if it can forward to output (lowest port number priority) req ack
+cut throughput by half - packet - bubble - packet - bubble (no intelligence) otherwise algorithm (deadlocks)
+statemachine + 5 multiplexers
+
+***Timeline***
+Design packet structure
+Design and implement router
+Test all directions
+Put all routers together
+Test whole system
+Does it go east/west/south
+
+***Considerations***
+Use single flit packet 1 entry any bits you need (1 payload 1 route)
+Destination or route - xy (destination) 2 bit x 2 bit y
+Source routing - way to incode route (2 bit dir, 2bit, 2 bit for each router) look at bits and shift (source routing networks routing in header) routers are small
+tendency - keep routers small and dumb - information is in the packets
+
+Delivery: git repo
+
+
