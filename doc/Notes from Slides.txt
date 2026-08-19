@@ -25,3 +25,33 @@ tendency - keep routers small and dumb - information is in the packets
 Delivery: git repo
 
 
+RASMUS NOTER
+router
+
+x / y shifting
+
+header - første 4 bits til koordinat:
+
+   00 01 10
+00  1  2  3
+
+01  4  5  6
+
+10  7  8  9
+
+
+
+comparator; hvis højere, send højre, hvis lavere send venstre hvis lig kig på y koord.
+comparator 2; hvis højere send ned, hvis lavere send op, hvis lig send lokal.
+
+
+states;
+
+idle?
+req/ack?
+compare x
+compare y
+
+
+Hvordan skal hver router kende sin egen adresse?
+
