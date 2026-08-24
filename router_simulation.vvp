@@ -1,0 +1,127 @@
+#! /mingw64/bin/vvp
+:ivl_version "13.0 (stable)" "(v13_0)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "C:\msys64\mingw64\lib\ivl\system.vpi";
+:vpi_module "C:\msys64\mingw64\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\msys64\mingw64\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\msys64\mingw64\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\msys64\mingw64\lib\ivl\va_math.vpi";
+:vpi_module "C:\msys64\mingw64\lib\ivl\v2009.vpi";
+S_00000223783ea430 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_00000223783fafd0 .scope module, "router_tb" "router_tb" 3 3;
+ .timescale -9 -12;
+v000002237844d440_0 .var "east_in", 35 0;
+v000002237844de40_0 .var "local_in", 35 0;
+v000002237844d300_0 .net "north_out", 35 0, v00000223783fb390_0;  1 drivers
+v000002237844d580_0 .var "south_in", 35 0;
+v000002237844d120_0 .var "west_in", 35 0;
+S_00000223783fb160 .scope module, "dut" "router" 3 13, 4 1 0, S_00000223783fafd0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "rst_n";
+    .port_info 2 /INPUT 36 "local_in";
+    .port_info 3 /INPUT 36 "north_in";
+    .port_info 4 /INPUT 36 "south_in";
+    .port_info 5 /INPUT 36 "east_in";
+    .port_info 6 /INPUT 36 "west_in";
+    .port_info 7 /OUTPUT 36 "local_out";
+    .port_info 8 /OUTPUT 36 "north_out";
+    .port_info 9 /OUTPUT 36 "south_out";
+    .port_info 10 /OUTPUT 36 "east_out";
+    .port_info 11 /OUTPUT 36 "west_out";
+o0000022378401fa8 .functor BUFZ 1, c4<z>; HiZ drive
+v00000223783c6ed0_0 .net "clk", 0 0, o0000022378401fa8;  0 drivers
+v00000223783a9db0_0 .net "east_in", 35 0, v000002237844d440_0;  1 drivers
+v00000223783c6bd0_0 .var "east_out", 35 0;
+v00000223783ea5c0_0 .net "local_in", 35 0, v000002237844de40_0;  1 drivers
+v00000223783ea660_0 .var "local_out", 35 0;
+o0000022378402098 .functor BUFZ 36, c4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; HiZ drive
+v00000223783fb2f0_0 .net "north_in", 35 0, o0000022378402098;  0 drivers
+v00000223783fb390_0 .var "north_out", 35 0;
+o00000223784020f8 .functor BUFZ 1, c4<z>; HiZ drive
+v000002237844dda0_0 .net "rst_n", 0 0, o00000223784020f8;  0 drivers
+v000002237844df80_0 .var "selL", 1 0;
+v000002237844d940_0 .net "south_in", 35 0, v000002237844d580_0;  1 drivers
+v000002237844d620_0 .var "south_out", 35 0;
+v000002237844d4e0_0 .net "west_in", 35 0, v000002237844d120_0;  1 drivers
+v000002237844dd00_0 .var "west_out", 35 0;
+E_00000223783aac20/0 .event anyedge, v000002237844df80_0, v00000223783ea5c0_0, v00000223783a9db0_0, v000002237844d940_0;
+E_00000223783aac20/1 .event anyedge, v000002237844d4e0_0;
+E_00000223783aac20 .event/or E_00000223783aac20/0, E_00000223783aac20/1;
+    .scope S_00000223783fb160;
+T_0 ;
+    %pushi/vec4 1, 0, 2;
+    %store/vec4 v000002237844df80_0, 0, 2;
+    %end;
+    .thread T_0;
+    .scope S_00000223783fb160;
+T_1 ;
+Ewait_0 .event/or E_00000223783aac20, E_0x0;
+    %wait Ewait_0;
+    %load/vec4 v000002237844df80_0;
+    %dup/vec4;
+    %pushi/vec4 0, 0, 2;
+    %cmp/u;
+    %jmp/1 T_1.0, 6;
+    %dup/vec4;
+    %pushi/vec4 1, 0, 2;
+    %cmp/u;
+    %jmp/1 T_1.1, 6;
+    %dup/vec4;
+    %pushi/vec4 2, 0, 2;
+    %cmp/u;
+    %jmp/1 T_1.2, 6;
+    %dup/vec4;
+    %pushi/vec4 3, 0, 2;
+    %cmp/u;
+    %jmp/1 T_1.3, 6;
+    %jmp T_1.4;
+T_1.0 ;
+    %load/vec4 v00000223783ea5c0_0;
+    %store/vec4 v00000223783fb390_0, 0, 36;
+    %jmp T_1.4;
+T_1.1 ;
+    %load/vec4 v00000223783a9db0_0;
+    %store/vec4 v00000223783fb390_0, 0, 36;
+    %jmp T_1.4;
+T_1.2 ;
+    %load/vec4 v000002237844d940_0;
+    %store/vec4 v00000223783fb390_0, 0, 36;
+    %jmp T_1.4;
+T_1.3 ;
+    %load/vec4 v000002237844d4e0_0;
+    %store/vec4 v00000223783fb390_0, 0, 36;
+    %jmp T_1.4;
+T_1.4 ;
+    %pop/vec4 1;
+    %jmp T_1;
+    .thread T_1, $push;
+    .scope S_00000223783fafd0;
+T_2 ;
+    %pushi/vec4 0, 0, 36;
+    %store/vec4 v000002237844de40_0, 0, 36;
+    %pushi/vec4 1, 0, 36;
+    %store/vec4 v000002237844d440_0, 0, 36;
+    %pushi/vec4 2, 0, 36;
+    %store/vec4 v000002237844d580_0, 0, 36;
+    %pushi/vec4 3, 0, 36;
+    %store/vec4 v000002237844d120_0, 0, 36;
+    %delay 10000, 0;
+    %vpi_call/w 3 28 "$display", "east_in=%b, north_out=%b", v000002237844d440_0, v000002237844d300_0 {0 0 0};
+    %pushi/vec4 2, 0, 36;
+    %store/vec4 v000002237844d440_0, 0, 36;
+    %delay 10000, 0;
+    %vpi_call/w 3 33 "$display", "east_in=%b, north_out=%b", v000002237844d440_0, v000002237844d300_0 {0 0 0};
+    %delay 10000, 0;
+    %vpi_call/w 3 36 "$finish" {0 0 0};
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "tb/router_tb.sv";
+    "src/router.sv";

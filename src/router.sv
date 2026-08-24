@@ -2,49 +2,32 @@ module router (
   input logic clk,
   input logic rst_n,
 
-  input logic[35:0] local_in,
-  input logic[35:0] north_in,
-  input logic[35:0] south_in,
-  input logic[35:0] east_in,
-  input logic[35:0] west_in,
+  input logic[36:0] local_in,
+  input logic[36:0] north_in,
+  input logic[36:0] south_in,
+  input logic[36:0] east_in,
+  input logic[36:0] west_in,
 
-  output logic[35:0] local_out,
-  output logic[35:0] north_out,
-  output logic[35:0] south_out,
-  output logic[35:0] east_out,
-  output logic[35:0] west_out
+  output logic[36:0] local_out,
+  output logic[36:0] north_out,
+  output logic[36:0] south_out,
+  output logic[36:0] east_out,
+  output logic[36:0] west_out
 );
 
-// state type def
-typedef enum logic[4:0] {idle, comp_x, comp_y} state_t;
-state_t state, next_state;
+  logic[1:0] selL;
 
-// state reg
-always_ff @(posedge clk or negedge rst_n) begin
-  if (!rst_n) begin
-    state <= idle;
-  end else begin
-    state <= next_state;
+  initial begin
+    selL = 2'b01;
   end
-end
 
-// state and output logic
-always_comb begin
-  // defaults
-  next_state = state;
+  always_comb begin
+    case (selL)
+        2'b00: north_out = local_in;
+        2'b01: north_out = east_in;
+        2'b10: north_out = south_in;
+        2'b11: north_out = west_in;
+    endcase
+  end
 
-  case(state)
-    idle: begin
-      
-    end
-
-    comp_x: begin
-      
-    end
-
-    comp_y: begin
-      
-    end
-
-end
-  
+endmodule
