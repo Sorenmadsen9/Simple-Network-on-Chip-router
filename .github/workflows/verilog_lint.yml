@@ -40,7 +40,7 @@ jobs:
             -Wno-fatal \
             "${SOURCES[@]}"
 
-  style:
+    style:
     name: Style / Verible
     runs-on: ubuntu-22.04
     needs: compile
@@ -49,14 +49,28 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Check SystemVerilog Style
-        uses: chipsalliance/verible-linter-action@main
+      - name: Install Verible
+        uses: chipsalliance/verible-actions-common/install-verible@main
         with:
-          paths: .
-          extensions: |
-            .sv
-            .v
           verible_version: "v0.0-4084-gf3e4d98b"
-          extra_args: "--ruleset=default"
-          fail_on_error: true
-          
+
+      - name: Check SystemVerilog Style
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mapfile -d '' SOURCES < <(
+            find . -type f \( -name "*.sv" -o -name "*.v" \) \
+              -not -path "./.git/*" \
+              -print0
+          )
+
+          if [ "${#SOURCES[@]}" -eq 0 ]; then
+            echo "No SystemVerilog or Verilog files found."
+            exit 1
+          fi
+
+          verible-verilog-lint \
+            --ruleset=default \
+            --show_diagnostic_context \
+            "${SOURCES[@]}"
