@@ -49,42 +49,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install Verible
-        shell: bash
-        env:
-          VERIBLE_VERSION: v0.0-4084-gf3e4d98b
-        run: |
-          set -euo pipefail
-
-          ARCHIVE="verible-${VERIBLE_VERSION}-linux-static-x86_64.tar.gz"
-          URL="https://github.com/chipsalliance/verible/releases/download/${VERIBLE_VERSION}/${ARCHIVE}"
-
-          curl -fsSL "$URL" -o "$ARCHIVE"
-
-          mkdir -p /tmp/verible
-
-          tar -xzf "$ARCHIVE" \
-            --strip-components=1 \
-            -C /tmp/verible
-
-          sudo install -m 0755 \
-            /tmp/verible/bin/verible-verilog-lint \
-            /usr/local/bin/verible-verilog-lint
-
-          verible-verilog-lint --version
-
       - name: Check SystemVerilog Style
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          mapfile -d '' SOURCES < <(
-            find . -type f \( -name "*.sv" -o -name "*.v" \) \
-              -not -path "./.git/*" \
-              -print0
-          )
-
-          verible-verilog-lint \
-            --ruleset=default \
-            --show_diagnostic_context \
-            "${SOURCES[@]}"
+        uses: chipsalliance/verible-linter-action@main
+        with:
+          paths: .
+          extensions: |
+            .sv
+            .v
+          verible_version: "v0.0-4084-gf3e4d98b"
+          extra_args: "--ruleset=default"
+          fail_on_error: true
+          
