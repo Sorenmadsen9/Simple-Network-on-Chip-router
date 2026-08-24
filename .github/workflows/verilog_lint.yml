@@ -35,7 +35,7 @@ jobs:
           docker run --rm \
             -v "$PWD:/work" \
             -w /work \
-            verilator/verilator:5.050 \
+            verilator/verilator:v5.050 \
             --lint-only \
             -Wno-fatal \
             "${SOURCES[@]}"
