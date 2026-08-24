@@ -1,25 +1,97 @@
-name: SVL Linter
+name: SystemVerilog CI
 
 on:
   push:
-    branches:
-      - main
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
+  compile:
+    name: Compile / Elaborate
+    runs-on: ubuntu-22.04
+
     steps:
-      - name: Checkout repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Run Verible Linter
-        uses: chipsalliance/verible-linter-action@v2.0
-        with:
-          verible_version: "v0.0-3622-g6c32d4b9"
-          paths: |
-            src
-          extensions: |
-            .sv
-            .v
-            .svh
-            .vh
+      - name: Check SystemVerilog with Verilator
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mapfile -d '' SOURCES < <(
+            find . -type f \( -name "*.sv" -o -name "*.v" \) \
+              -not -path "./.git/*" \
+              -print0
+          )
+
+          if [ "${#SOURCES[@]}" -eq 0 ]; then
+            echo "No SystemVerilog or Verilog files found."
+            exit 1
+          fi
+
+          docker run --rm \
+            -v "$PWD:/work" \
+            -w /work \
+            verilator/verilator:5.050 \
+            --lint-only \
+            -Wno-fatal \
+            "${SOURCES[@]}"
+
+  style:
+    name: Style / Verible
+    runs-on: ubuntu-22.04
+    needs: compile
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Verible
+        shell: bash
+        env:
+          VERIBLE_VERSION: v0.0-4084-gf3e4d98b
+        run: |
+          set -euo pipefail
+
+          DOWNLOAD_URL=$(
+            curl -fsSL \
+              "https://api.github.com/repos/chipsalliance/verible/releases/tags/${VERIBLE_VERSION}" \
+            | jq -r '
+                .assets[]
+                | select(.name | test("linux-static-x86_64\\.tar\\.gz$"))
+                | .browser_download_url
+              ' \
+            | head -n 1
+          )
+
+          if [ -z "$DOWNLOAD_URL" ] || [ "$DOWNLOAD_URL" = "null" ]; then
+            echo "Could not find Verible Linux x86_64 binary."
+            exit 1
+          fi
+
+          curl -fsSL "$DOWNLOAD_URL" -o verible.tar.gz
+
+          sudo tar -xzf verible.tar.gz \
+            --strip-components=1 \
+            -C /usr/local
+
+          verible-verilog-lint --version
+
+      - name: Check SystemVerilog Style
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mapfile -d '' SOURCES < <(
+            find . -type f \( -name "*.sv" -o -name "*.v" \) \
+              -not -path "./.git/*" \
+              -print0
+          )
+
+          verible-verilog-lint \
+            --ruleset=default \
+            --show_diagnostic_context \
+            "${SOURCES[@]}"
