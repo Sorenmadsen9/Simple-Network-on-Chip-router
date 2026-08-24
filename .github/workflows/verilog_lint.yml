@@ -1,0 +1,24 @@
+name: SVL Linter
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Verible Linter
+        uses: chipsalliance/verible-linter-action@v2.0
+        with:
+          paths: |
+            src
+          extensions: |
+            .sv
+            .v
+            .svh
+            .vh
