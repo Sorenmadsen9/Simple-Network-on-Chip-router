@@ -15,6 +15,7 @@ jobs:
       - name: Run Verible Linter
         uses: chipsalliance/verible-linter-action@v2.0
         with:
+          verible_version: "v0.0-3622-g6c32d4b9"
           paths: |
             src
           extensions: |
