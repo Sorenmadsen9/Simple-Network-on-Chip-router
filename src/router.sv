@@ -16,7 +16,7 @@ module router(
   output logic[36:0] west_out
 );
 
-always_comb begin : routing_local_in
+begin : routing_local_in
   if(local_in[36] == 1'b1 && local_in[35:32] < local_adr[3:2]) begin
     east_out <= local_in;
   end else if(local_in[36] == 1'b1 && local_in[35:32] > local_adr[3:2]) begin
