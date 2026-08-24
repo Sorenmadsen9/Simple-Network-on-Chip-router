@@ -56,27 +56,20 @@ jobs:
         run: |
           set -euo pipefail
 
-          DOWNLOAD_URL=$(
-            curl -fsSL \
-              "https://api.github.com/repos/chipsalliance/verible/releases/tags/${VERIBLE_VERSION}" \
-            | jq -r '
-                .assets[]
-                | select(.name | test("linux-static-x86_64\\.tar\\.gz$"))
-                | .browser_download_url
-              ' \
-            | head -n 1
-          )
+          ARCHIVE="verible-${VERIBLE_VERSION}-linux-static-x86_64.tar.gz"
+          URL="https://github.com/chipsalliance/verible/releases/download/${VERIBLE_VERSION}/${ARCHIVE}"
 
-          if [ -z "$DOWNLOAD_URL" ] || [ "$DOWNLOAD_URL" = "null" ]; then
-            echo "Could not find Verible Linux x86_64 binary."
-            exit 1
-          fi
+          curl -fsSL "$URL" -o "$ARCHIVE"
 
-          curl -fsSL "$DOWNLOAD_URL" -o verible.tar.gz
+          mkdir -p /tmp/verible
 
-          sudo tar -xzf verible.tar.gz \
+          tar -xzf "$ARCHIVE" \
             --strip-components=1 \
-            -C /usr/local
+            -C /tmp/verible
+
+          sudo install -m 0755 \
+            /tmp/verible/bin/verible-verilog-lint \
+            /usr/local/bin/verible-verilog-lint
 
           verible-verilog-lint --version
 
