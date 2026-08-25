@@ -1,0 +1,70 @@
+`timescale 1ns/1ns
+
+module noc_top_tb ;
+logic clk, rst_n;
+logic[36:0] local_in_a, local_in_b, local_in_c, local_in_d, local_in_e;
+logic[36:0] local_in_f, local_in_g, local_in_h, local_in_i;
+logic[36:0] local_out_a, local_out_b, local_out_c, local_out_d, local_out_e;
+logic[36:0] local_out_f, local_out_g, local_out_h, local_out_i;
+
+noc_top dut(
+  .clk(clk),
+  .rst_n(rst_n),
+  .local_in_a(local_in_a),
+  .local_in_b(local_in_b),
+  .local_in_c(local_in_c),
+  .local_in_d(local_in_d),
+  .local_in_e(local_in_e),
+  .local_in_f(local_in_f),
+  .local_in_g(local_in_g),
+  .local_in_h(local_in_h),
+  .local_in_i(local_in_i),
+  .local_out_a(local_out_a),
+  .local_out_b(local_out_b),
+  .local_out_c(local_out_c),
+  .local_out_d(local_out_d),
+  .local_out_e(local_out_e),
+  .local_out_f(local_out_f),
+  .local_out_g(local_out_g),
+  .local_out_h(local_out_h),
+  .local_out_i(local_out_i)
+);
+
+initial begin
+  $dumpfile("noc_top_tb.vcd");
+  $dumpvars(0, noc_top_tb);
+end
+
+initial begin
+  clk = 0;
+  forever #5 clk = ~clk;
+end
+
+initial begin
+  //Setting the initial value of all inputs
+  local_in_a = '0;
+  local_in_b = '0;
+  local_in_c = '0;
+  local_in_d = '0;
+  local_in_e = '0;
+  local_in_f = '0;
+  local_in_g = '0;
+  local_in_h = '0;
+  local_in_i = '0;
+
+  //restarting the module
+  rst_n = 0;
+  repeat (2) @(posedge clk);  // hold reset across at least one full edge
+  rst_n = 1;
+  @(posedge clk);
+  #1;
+
+  $display(" ");
+  $display("local_in_a=%b", local_in_a);
+  $display(" ");
+
+  $finish;
+
+end
+
+endmodule

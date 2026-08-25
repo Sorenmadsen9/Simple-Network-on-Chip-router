@@ -1,0 +1,686 @@
+$date
+	Tue Aug 25 15:27:40 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ns
+$end
+$scope module noc_top_tb $end
+$var wire 37 ! local_out_i [36:0] $end
+$var wire 37 " local_out_h [36:0] $end
+$var wire 37 # local_out_g [36:0] $end
+$var wire 37 $ local_out_f [36:0] $end
+$var wire 37 % local_out_e [36:0] $end
+$var wire 37 & local_out_d [36:0] $end
+$var wire 37 ' local_out_c [36:0] $end
+$var wire 37 ( local_out_b [36:0] $end
+$var wire 37 ) local_out_a [36:0] $end
+$var reg 1 * clk $end
+$var reg 37 + local_in_a [36:0] $end
+$var reg 37 , local_in_b [36:0] $end
+$var reg 37 - local_in_c [36:0] $end
+$var reg 37 . local_in_d [36:0] $end
+$var reg 37 / local_in_e [36:0] $end
+$var reg 37 0 local_in_f [36:0] $end
+$var reg 37 1 local_in_g [36:0] $end
+$var reg 37 2 local_in_h [36:0] $end
+$var reg 37 3 local_in_i [36:0] $end
+$var reg 1 4 rst_n $end
+$scope module dut $end
+$var wire 1 * clk $end
+$var wire 37 5 local_in_a [36:0] $end
+$var wire 37 6 local_in_b [36:0] $end
+$var wire 37 7 local_in_c [36:0] $end
+$var wire 37 8 local_in_d [36:0] $end
+$var wire 37 9 local_in_e [36:0] $end
+$var wire 37 : local_in_f [36:0] $end
+$var wire 37 ; local_in_g [36:0] $end
+$var wire 37 < local_in_h [36:0] $end
+$var wire 37 = local_in_i [36:0] $end
+$var wire 1 4 rst_n $end
+$var wire 37 > local_out_i [36:0] $end
+$var wire 37 ? local_out_h [36:0] $end
+$var wire 37 @ local_out_g [36:0] $end
+$var wire 37 A local_out_f [36:0] $end
+$var wire 37 B local_out_e [36:0] $end
+$var wire 37 C local_out_d [36:0] $end
+$var wire 37 D local_out_c [36:0] $end
+$var wire 37 E local_out_b [36:0] $end
+$var wire 37 F local_out_a [36:0] $end
+$var wire 37 G i_h_w [36:0] $end
+$var wire 37 H i_g_e [36:0] $end
+$var wire 37 I i_f_n [36:0] $end
+$var wire 37 J i_c_s [36:0] $end
+$var wire 37 K h_i_e [36:0] $end
+$var wire 37 L h_g_w [36:0] $end
+$var wire 37 M h_e_n [36:0] $end
+$var wire 37 N h_b_s [36:0] $end
+$var wire 37 O g_i_w [36:0] $end
+$var wire 37 P g_h_e [36:0] $end
+$var wire 37 Q g_d_n [36:0] $end
+$var wire 37 R g_a_s [36:0] $end
+$var wire 37 S f_i_s [36:0] $end
+$var wire 37 T f_e_w [36:0] $end
+$var wire 37 U f_d_e [36:0] $end
+$var wire 37 V f_c_n [36:0] $end
+$var wire 37 W e_h_s [36:0] $end
+$var wire 37 X e_f_e [36:0] $end
+$var wire 37 Y e_d_w [36:0] $end
+$var wire 37 Z e_b_n [36:0] $end
+$var wire 37 [ d_g_s [36:0] $end
+$var wire 37 \ d_f_w [36:0] $end
+$var wire 37 ] d_e_e [36:0] $end
+$var wire 37 ^ d_a_n [36:0] $end
+$var wire 37 _ c_i_n [36:0] $end
+$var wire 37 ` c_f_s [36:0] $end
+$var wire 37 a c_b_w [36:0] $end
+$var wire 37 b c_a_e [36:0] $end
+$var wire 37 c b_h_n [36:0] $end
+$var wire 37 d b_e_s [36:0] $end
+$var wire 37 e b_c_e [36:0] $end
+$var wire 37 f b_a_w [36:0] $end
+$var wire 37 g a_g_n [36:0] $end
+$var wire 37 h a_d_s [36:0] $end
+$var wire 37 i a_c_w [36:0] $end
+$var wire 37 j a_b_e [36:0] $end
+$scope module u_a $end
+$var wire 1 * clk $end
+$var wire 37 k east_out [36:0] $end
+$var wire 37 l local_in [36:0] $end
+$var wire 37 m local_out [36:0] $end
+$var wire 4 n location [3:0] $end
+$var wire 37 o north_out [36:0] $end
+$var wire 1 4 rst_n $end
+$var wire 37 p south_out [36:0] $end
+$var wire 37 q west_out [36:0] $end
+$var wire 37 r west_in [36:0] $end
+$var wire 37 s south_in [36:0] $end
+$var wire 37 t north_in [36:0] $end
+$var wire 37 u east_in [36:0] $end
+$var reg 37 v east_reg [36:0] $end
+$var reg 37 w local_reg [36:0] $end
+$var reg 37 x north_reg [36:0] $end
+$var reg 37 y south_reg [36:0] $end
+$var reg 37 z west_reg [36:0] $end
+$upscope $end
+$scope module u_b $end
+$var wire 1 * clk $end
+$var wire 37 { east_out [36:0] $end
+$var wire 37 | local_in [36:0] $end
+$var wire 37 } local_out [36:0] $end
+$var wire 4 ~ location [3:0] $end
+$var wire 37 !" north_out [36:0] $end
+$var wire 1 4 rst_n $end
+$var wire 37 "" south_out [36:0] $end
+$var wire 37 #" west_in [36:0] $end
+$var wire 37 $" west_out [36:0] $end
+$var wire 37 %" south_in [36:0] $end
+$var wire 37 &" north_in [36:0] $end
+$var wire 37 '" east_in [36:0] $end
+$var reg 37 (" east_reg [36:0] $end
+$var reg 37 )" local_reg [36:0] $end
+$var reg 37 *" north_reg [36:0] $end
+$var reg 37 +" south_reg [36:0] $end
+$var reg 37 ," west_reg [36:0] $end
+$upscope $end
+$scope module u_c $end
+$var wire 1 * clk $end
+$var wire 37 -" east_in [36:0] $end
+$var wire 37 ." east_out [36:0] $end
+$var wire 37 /" local_in [36:0] $end
+$var wire 37 0" local_out [36:0] $end
+$var wire 4 1" location [3:0] $end
+$var wire 37 2" north_out [36:0] $end
+$var wire 1 4 rst_n $end
+$var wire 37 3" south_out [36:0] $end
+$var wire 37 4" west_in [36:0] $end
+$var wire 37 5" west_out [36:0] $end
+$var wire 37 6" south_in [36:0] $end
+$var wire 37 7" north_in [36:0] $end
+$var reg 37 8" east_reg [36:0] $end
+$var reg 37 9" local_reg [36:0] $end
+$var reg 37 :" north_reg [36:0] $end
+$var reg 37 ;" south_reg [36:0] $end
+$var reg 37 <" west_reg [36:0] $end
+$upscope $end
+$scope module u_d $end
+$var wire 1 * clk $end
+$var wire 37 =" east_out [36:0] $end
+$var wire 37 >" local_in [36:0] $end
+$var wire 37 ?" local_out [36:0] $end
+$var wire 4 @" location [3:0] $end
+$var wire 37 A" north_in [36:0] $end
+$var wire 37 B" north_out [36:0] $end
+$var wire 1 4 rst_n $end
+$var wire 37 C" south_out [36:0] $end
+$var wire 37 D" west_out [36:0] $end
+$var wire 37 E" west_in [36:0] $end
+$var wire 37 F" south_in [36:0] $end
+$var wire 37 G" east_in [36:0] $end
+$var reg 37 H" east_reg [36:0] $end
+$var reg 37 I" local_reg [36:0] $end
+$var reg 37 J" north_reg [36:0] $end
+$var reg 37 K" south_reg [36:0] $end
+$var reg 37 L" west_reg [36:0] $end
+$upscope $end
+$scope module u_e $end
+$var wire 1 * clk $end
+$var wire 37 M" east_out [36:0] $end
+$var wire 37 N" local_in [36:0] $end
+$var wire 37 O" local_out [36:0] $end
+$var wire 4 P" location [3:0] $end
+$var wire 37 Q" north_in [36:0] $end
+$var wire 37 R" north_out [36:0] $end
+$var wire 1 4 rst_n $end
+$var wire 37 S" south_out [36:0] $end
+$var wire 37 T" west_in [36:0] $end
+$var wire 37 U" west_out [36:0] $end
+$var wire 37 V" south_in [36:0] $end
+$var wire 37 W" east_in [36:0] $end
+$var reg 37 X" east_reg [36:0] $end
+$var reg 37 Y" local_reg [36:0] $end
+$var reg 37 Z" north_reg [36:0] $end
+$var reg 37 [" south_reg [36:0] $end
+$var reg 37 \" west_reg [36:0] $end
+$upscope $end
+$scope module u_f $end
+$var wire 1 * clk $end
+$var wire 37 ]" east_in [36:0] $end
+$var wire 37 ^" east_out [36:0] $end
+$var wire 37 _" local_in [36:0] $end
+$var wire 37 `" local_out [36:0] $end
+$var wire 4 a" location [3:0] $end
+$var wire 37 b" north_in [36:0] $end
+$var wire 37 c" north_out [36:0] $end
+$var wire 1 4 rst_n $end
+$var wire 37 d" south_out [36:0] $end
+$var wire 37 e" west_in [36:0] $end
+$var wire 37 f" west_out [36:0] $end
+$var wire 37 g" south_in [36:0] $end
+$var reg 37 h" east_reg [36:0] $end
+$var reg 37 i" local_reg [36:0] $end
+$var reg 37 j" north_reg [36:0] $end
+$var reg 37 k" south_reg [36:0] $end
+$var reg 37 l" west_reg [36:0] $end
+$upscope $end
+$scope module u_g $end
+$var wire 1 * clk $end
+$var wire 37 m" east_out [36:0] $end
+$var wire 37 n" local_in [36:0] $end
+$var wire 37 o" local_out [36:0] $end
+$var wire 4 p" location [3:0] $end
+$var wire 37 q" north_in [36:0] $end
+$var wire 37 r" north_out [36:0] $end
+$var wire 1 4 rst_n $end
+$var wire 37 s" south_in [36:0] $end
+$var wire 37 t" south_out [36:0] $end
+$var wire 37 u" west_out [36:0] $end
+$var wire 37 v" west_in [36:0] $end
+$var wire 37 w" east_in [36:0] $end
+$var reg 37 x" east_reg [36:0] $end
+$var reg 37 y" local_reg [36:0] $end
+$var reg 37 z" north_reg [36:0] $end
+$var reg 37 {" south_reg [36:0] $end
+$var reg 37 |" west_reg [36:0] $end
+$upscope $end
+$scope module u_h $end
+$var wire 1 * clk $end
+$var wire 37 }" east_out [36:0] $end
+$var wire 37 ~" local_in [36:0] $end
+$var wire 37 !# local_out [36:0] $end
+$var wire 4 "# location [3:0] $end
+$var wire 37 ## north_in [36:0] $end
+$var wire 37 $# north_out [36:0] $end
+$var wire 1 4 rst_n $end
+$var wire 37 %# south_in [36:0] $end
+$var wire 37 &# south_out [36:0] $end
+$var wire 37 '# west_in [36:0] $end
+$var wire 37 (# west_out [36:0] $end
+$var wire 37 )# east_in [36:0] $end
+$var reg 37 *# east_reg [36:0] $end
+$var reg 37 +# local_reg [36:0] $end
+$var reg 37 ,# north_reg [36:0] $end
+$var reg 37 -# south_reg [36:0] $end
+$var reg 37 .# west_reg [36:0] $end
+$upscope $end
+$scope module u_i $end
+$var wire 1 * clk $end
+$var wire 37 /# east_in [36:0] $end
+$var wire 37 0# east_out [36:0] $end
+$var wire 37 1# local_in [36:0] $end
+$var wire 37 2# local_out [36:0] $end
+$var wire 4 3# location [3:0] $end
+$var wire 37 4# north_in [36:0] $end
+$var wire 37 5# north_out [36:0] $end
+$var wire 1 4 rst_n $end
+$var wire 37 6# south_in [36:0] $end
+$var wire 37 7# south_out [36:0] $end
+$var wire 37 8# west_in [36:0] $end
+$var wire 37 9# west_out [36:0] $end
+$var reg 37 :# east_reg [36:0] $end
+$var reg 37 ;# local_reg [36:0] $end
+$var reg 37 <# north_reg [36:0] $end
+$var reg 37 =# south_reg [36:0] $end
+$var reg 37 ># west_reg [36:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx >#
+bx =#
+bx <#
+bx ;#
+bx :#
+bx 9#
+bx 8#
+bx 7#
+bx 6#
+bx 5#
+bx 4#
+b1111 3#
+bx 2#
+b0 1#
+bx 0#
+bx /#
+bx .#
+bx -#
+bx ,#
+bx +#
+bx *#
+bx )#
+bx (#
+bx '#
+bx &#
+bx %#
+bx $#
+bx ##
+b1110 "#
+bx !#
+b0 ~"
+bx }"
+bx |"
+bx {"
+bx z"
+bx y"
+bx x"
+bx w"
+bx v"
+bx u"
+bx t"
+bx s"
+bx r"
+bx q"
+b1101 p"
+bx o"
+b0 n"
+bx m"
+bx l"
+bx k"
+bx j"
+bx i"
+bx h"
+bx g"
+bx f"
+bx e"
+bx d"
+bx c"
+bx b"
+b1011 a"
+bx `"
+b0 _"
+bx ^"
+bx ]"
+bx \"
+bx ["
+bx Z"
+bx Y"
+bx X"
+bx W"
+bx V"
+bx U"
+bx T"
+bx S"
+bx R"
+bx Q"
+b1010 P"
+bx O"
+b0 N"
+bx M"
+bx L"
+bx K"
+bx J"
+bx I"
+bx H"
+bx G"
+bx F"
+bx E"
+bx D"
+bx C"
+bx B"
+bx A"
+b1001 @"
+bx ?"
+b0 >"
+bx ="
+bx <"
+bx ;"
+bx :"
+bx 9"
+bx 8"
+bx 7"
+bx 6"
+bx 5"
+bx 4"
+bx 3"
+bx 2"
+b111 1"
+bx 0"
+b0 /"
+bx ."
+bx -"
+bx ,"
+bx +"
+bx *"
+bx )"
+bx ("
+bx '"
+bx &"
+bx %"
+bx $"
+bx #"
+bx ""
+bx !"
+b110 ~
+bx }
+b0 |
+bx {
+bx z
+bx y
+bx x
+bx w
+bx v
+bx u
+bx t
+bx s
+bx r
+bx q
+bx p
+bx o
+b101 n
+bx m
+b0 l
+bx k
+bx j
+bx i
+bx h
+bx g
+bx f
+bx e
+bx d
+bx c
+bx b
+bx a
+bx `
+bx _
+bx ^
+bx ]
+bx \
+bx [
+bx Z
+bx Y
+bx X
+bx W
+bx V
+bx U
+bx T
+bx S
+bx R
+bx Q
+bx P
+bx O
+bx N
+bx M
+bx L
+bx K
+bx J
+bx I
+bx H
+bx G
+bx F
+bx E
+bx D
+bx C
+bx B
+bx A
+bx @
+bx ?
+bx >
+b0 =
+b0 <
+b0 ;
+b0 :
+b0 9
+b0 8
+b0 7
+b0 6
+b0 5
+04
+b0 3
+b0 2
+b0 1
+b0 0
+b0 /
+b0 .
+b0 -
+b0 ,
+b0 +
+0*
+bx )
+bx (
+bx '
+bx &
+bx %
+bx $
+bx #
+bx "
+bx !
+$end
+#5
+b0 )
+b0 F
+b0 m
+b0 w
+b0 h
+b0 p
+b0 A"
+b0 y
+b0 g
+b0 o
+b0 s"
+b0 x
+b0 i
+b0 q
+b0 -"
+b0 z
+b0 j
+b0 k
+b0 #"
+b0 v
+b0 (
+b0 E
+b0 }
+b0 )"
+b0 d
+b0 ""
+b0 Q"
+b0 +"
+b0 c
+b0 !"
+b0 %#
+b0 *"
+b0 f
+b0 u
+b0 $"
+b0 ,"
+b0 e
+b0 {
+b0 4"
+b0 ("
+b0 '
+b0 D
+b0 0"
+b0 9"
+b0 `
+b0 3"
+b0 b"
+b0 ;"
+b0 _
+b0 2"
+b0 6#
+b0 :"
+b0 a
+b0 '"
+b0 5"
+b0 <"
+b0 b
+b0 r
+b0 ."
+b0 8"
+b0 &
+b0 C
+b0 ?"
+b0 I"
+b0 [
+b0 C"
+b0 q"
+b0 K"
+b0 ^
+b0 s
+b0 B"
+b0 J"
+b0 \
+b0 D"
+b0 ]"
+b0 L"
+b0 ]
+b0 ="
+b0 T"
+b0 H"
+b0 %
+b0 B
+b0 O"
+b0 Y"
+b0 W
+b0 S"
+b0 ##
+b0 ["
+b0 Z
+b0 %"
+b0 R"
+b0 Z"
+b0 Y
+b0 G"
+b0 U"
+b0 \"
+b0 X
+b0 M"
+b0 e"
+b0 X"
+b0 $
+b0 A
+b0 `"
+b0 i"
+b0 S
+b0 d"
+b0 4#
+b0 k"
+b0 V
+b0 6"
+b0 c"
+b0 j"
+b0 T
+b0 W"
+b0 f"
+b0 l"
+b0 U
+b0 E"
+b0 ^"
+b0 h"
+b0 #
+b0 @
+b0 o"
+b0 y"
+b0 R
+b0 t
+b0 t"
+b0 {"
+b0 Q
+b0 F"
+b0 r"
+b0 z"
+b0 O
+b0 u"
+b0 /#
+b0 |"
+b0 P
+b0 m"
+b0 '#
+b0 x"
+b0 "
+b0 ?
+b0 !#
+b0 +#
+b0 N
+b0 &"
+b0 &#
+b0 -#
+b0 M
+b0 V"
+b0 $#
+b0 ,#
+b0 L
+b0 w"
+b0 (#
+b0 .#
+b0 K
+b0 }"
+b0 8#
+b0 *#
+b0 !
+b0 >
+b0 2#
+b0 ;#
+b0 J
+b0 7"
+b0 7#
+b0 =#
+b0 I
+b0 g"
+b0 5#
+b0 <#
+b0 G
+b0 )#
+b0 9#
+b0 >#
+b0 H
+b0 v"
+b0 0#
+b0 :#
+1*
+#10
+0*
+#15
+14
+1*
+#20
+0*
+#25
+1*
+#26

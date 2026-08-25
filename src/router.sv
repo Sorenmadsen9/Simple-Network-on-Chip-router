@@ -1,3 +1,20 @@
+/*
+
+Module for the router itself
+
+The package delivered to the router consists of
+1, 2, ..., 32   ---   33, 34   ---   35, 36   ---   37
+(Payload)             (X-bits)       (Y-bits)       (Valid-bit)
+
+The X- and Y-bits of the header is the desired destination for the package.
+
+The valid-bit has to be '1' for the package to be accepted.
+If either the X- or Y-bits are '00', the package is also invalid.
+
+Therefore the coordinates of a router can never be '00XX' or 'XX00'.
+
+*/
+
 module router (
   input logic clk,
   input logic rst_n,
@@ -34,19 +51,19 @@ module router (
   always_ff @(posedge clk) begin
     if(!rst_n) begin
       // Default
-      east_reg <= 37'd0;
-      west_reg <= 37'd0;
-      north_reg <= 37'd0;
-      south_reg <= 37'd0;
-      local_reg <= 37'd0;
+      east_reg <= '0;
+      west_reg <= '0;
+      north_reg <= '0;
+      south_reg <= '0;
+      local_reg <= '0;
 
     end else begin
       // Default
-      east_reg <= 37'd0;
-      west_reg <= 37'd0;
-      north_reg <= 37'd0;
-      south_reg <= 37'd0;
-      local_reg <= 37'd0;
+      east_reg <= '0;
+      west_reg <= '0;
+      north_reg <= '0;
+      south_reg <= '0;
+      local_reg <= '0;
 
       //  ***CHOOSING WHERE THE PACKAGES SHOULD MOVE***
       // determining which package moves east
