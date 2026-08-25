@@ -33,7 +33,7 @@ initial begin
 end
 
 // port enum for helper task
-typedef enum { EAST, WEST, NORTH, SOUTH, LOCAL } port_e;
+typedef enum {EAST, WEST, NORTH, SOUTH, LOCAL} port_e;
 
 // Helper task: drive local_in, wait one clock for the register to update,
 // then print the result
@@ -71,7 +71,7 @@ initial begin
   south_in = '0;
   local_in = '0;
 
-  //The location of the testing router
+  //The location of the router under test
   location = 4'b1010;
 
   //restarting the module

@@ -1,8 +1,8 @@
 // top module for 3x3 torus-connected routers
 
 module noc_top (
-  input  logic        clk,
-  input  logic        rst_n,
+  input  logic clk,
+  input  logic rst_n,
 
   // inputs
   input  logic [36:0] local_in_a,
@@ -43,7 +43,7 @@ module noc_top (
   logic [36:0] c_f_s, f_i_s, i_c_s;      // column x=11 south
   logic [36:0] f_c_n, i_f_n, c_i_n;      // column x=11 north
 
-
+  // ***SETTING UP ALL THE ROUTERS***
   // A, location 0101. East B, west C, south D, north G
   router u_a (
     .clk       (clk),
