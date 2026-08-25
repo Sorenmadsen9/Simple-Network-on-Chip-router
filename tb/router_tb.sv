@@ -43,15 +43,16 @@ task automatic drive_and_print(input port_e port, input logic[36:0] val);
   north_in = '0;
   south_in = '0;
   local_in = '0;
- 
+
   case(port)
     EAST:  east_in  = val;
     WEST:  west_in  = val;
     NORTH: north_in = val;
     SOUTH: south_in = val;
     LOCAL: local_in = val;
+    default: local_in = val;  // should never happen
   endcase
- 
+
   @(posedge clk);
   #1;
   $display("port=%s, in=%b | east_out=%b west_out=%b north_out=%b south_out=%b local_out=%b",
