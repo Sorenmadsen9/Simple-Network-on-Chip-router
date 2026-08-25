@@ -1,0 +1,97 @@
+name: SystemVerilog Synthesis
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  TOP_MODULE: router
+
+jobs:
+  synthesis:
+    name: Synthesis / Schematic
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install OSS CAD Suite
+        uses: YosysHQ/setup-oss-cad-suite@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+
+      - name: Synthesize Design
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p synthesis
+
+          SOURCES=$(find src \
+            -type f \
+            \( -name "*.sv" -o -name "*.v" \) \
+            | sort \
+            | tr '\n' ' ')
+
+          if [ -z "$SOURCES" ]; then
+            echo "No SystemVerilog or Verilog files found in src/"
+            exit 1
+          fi
+
+          echo "Top module: ${TOP_MODULE}"
+          echo "Sources: ${SOURCES}"
+
+          yosys -m slang \
+            -l synthesis/synthesis.log \
+            -p "
+              read_slang --std 1800-2023 --top ${TOP_MODULE} ${SOURCES};
+              synth -top ${TOP_MODULE};
+              check -assert;
+              stat -top ${TOP_MODULE};
+              write_json synthesis/${TOP_MODULE}.json;
+            "
+
+      - name: Generate Hardware Schematic
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p schematic
+
+          SOURCES=$(find src \
+            -type f \
+            \( -name "*.sv" -o -name "*.v" \) \
+            | sort \
+            | tr '\n' ' ')
+
+          yosys -m slang \
+            -p "
+              read_slang --std 1800-2023 --top ${TOP_MODULE} ${SOURCES};
+              prep -top ${TOP_MODULE};
+              show \
+                -format svg \
+                -viewer none \
+                -prefix schematic/${TOP_MODULE} \
+                -width \
+                -stretch \
+                ${TOP_MODULE};
+            "
+
+      - name: Upload Synthesis Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: synthesis-${{ env.TOP_MODULE }}
+          path: |
+            synthesis/
+            schematic/
+          if-no-files-found: warn
