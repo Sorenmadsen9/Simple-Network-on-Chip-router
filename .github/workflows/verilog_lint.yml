@@ -1,7 +1,6 @@
 name: SystemVerilog CI
 
 on:
-  push:
   pull_request:
 
 permissions:

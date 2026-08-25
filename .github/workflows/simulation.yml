@@ -1,7 +1,6 @@
 name: SystemVerilog Simulation
 
 on:
-  push:
   pull_request:
 
 permissions:

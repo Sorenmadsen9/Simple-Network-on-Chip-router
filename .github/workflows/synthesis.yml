@@ -1,7 +1,6 @@
 name: SystemVerilog Synthesis
 
 on:
-  push:
   pull_request:
 
 permissions:
