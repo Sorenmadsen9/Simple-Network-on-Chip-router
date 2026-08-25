@@ -1,0 +1,80 @@
+$date
+	Tue Aug 25 10:54:18 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module router_tb $end
+$var wire 37 ! west_out [36:0] $end
+$var wire 37 " south_out [36:0] $end
+$var wire 37 # north_out [36:0] $end
+$var wire 37 $ local_out [36:0] $end
+$var wire 37 % east_out [36:0] $end
+$var reg 1 & clk $end
+$var reg 37 ' east_in [36:0] $end
+$var reg 37 ( local_in [36:0] $end
+$var reg 4 ) location [3:0] $end
+$var reg 37 * north_in [36:0] $end
+$var reg 1 + rst_n $end
+$var reg 37 , south_in [36:0] $end
+$var reg 37 - west_in [36:0] $end
+$scope module dut $end
+$var wire 1 & clk $end
+$var wire 37 . east_in [36:0] $end
+$var wire 37 / east_out [36:0] $end
+$var wire 37 0 local_in [36:0] $end
+$var wire 37 1 local_out [36:0] $end
+$var wire 4 2 location [3:0] $end
+$var wire 37 3 north_in [36:0] $end
+$var wire 37 4 north_out [36:0] $end
+$var wire 1 + rst_n $end
+$var wire 37 5 south_in [36:0] $end
+$var wire 37 6 south_out [36:0] $end
+$var wire 37 7 west_in [36:0] $end
+$var wire 37 8 west_out [36:0] $end
+$var reg 37 9 east_reg [36:0] $end
+$var reg 37 : local_reg [36:0] $end
+$var reg 37 ; north_reg [36:0] $end
+$var reg 37 < south_reg [36:0] $end
+$var reg 37 = west_reg [36:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx =
+bx <
+bx ;
+bx :
+bx 9
+bx 8
+bx 7
+bx 6
+bx 5
+bx 4
+bx 3
+b1010 2
+bx 1
+b1111100000000000000000000000000000000 0
+bx /
+bx .
+bx -
+bx ,
+1+
+bx *
+b1010 )
+b1111100000000000000000000000000000000 (
+bx '
+0&
+bx %
+bx $
+bx #
+bx "
+bx !
+$end
