@@ -19,7 +19,7 @@ module router (
 );
 
   //selects which input are assigned to an output
-  //0XX -> the output should be 37'd0 
+  //0XX -> the output should be 37'd0
   //1YY -> output is the input if address YY
   logic[2:0] selE;
   logic[2:0] selW;
