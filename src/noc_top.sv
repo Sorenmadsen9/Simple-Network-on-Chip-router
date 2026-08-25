@@ -95,7 +95,7 @@ module noc_top (
     .local_out (local_out_c)
   );
 
-  // D, location 1001. east E, west F , south G, north A 
+  // D, location 1001. east E, west F , south G, north A
   router u_d (
     .clk       (clk),
     .rst_n     (rst_n),
@@ -112,7 +112,7 @@ module noc_top (
     .local_out (local_out_d)
   );
 
-  // E, centre, location 1010. east F, west D, south H, north B 
+  // E, centre, location 1010. east F, west D, south H, north B
   router u_e (
     .clk       (clk),
     .rst_n     (rst_n),
@@ -129,7 +129,7 @@ module noc_top (
     .local_out (local_out_e)
   );
 
-  //  F, location 1011. east D , west E, south I, north C 
+  //  F, location 1011. east D , west E, south I, north C
   router u_f (
     .clk       (clk),
     .rst_n     (rst_n),
@@ -146,7 +146,7 @@ module noc_top (
     .local_out (local_out_f)
   );
 
-  // G, location 1101. east H, west I , south A , north D 
+  // G, location 1101. east H, west I , south A , north D
   router u_g (
     .clk       (clk),
     .rst_n     (rst_n),
@@ -163,7 +163,7 @@ module noc_top (
     .local_out (local_out_g)
   );
 
-  // H, location 1110. east I, west G, south B , north E 
+  // H, location 1110. east I, west G, south B , north E
   router u_h (
     .clk       (clk),
     .rst_n     (rst_n),
@@ -180,7 +180,7 @@ module noc_top (
     .local_out (local_out_h)
   );
 
-  // I, location 1111. east G , west H, south C , north F 
+  // I, location 1111. east G , west H, south C , north F
   router u_i (
     .clk       (clk),
     .rst_n     (rst_n),
