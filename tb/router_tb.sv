@@ -1,3 +1,5 @@
+`timescale 1ns/1ps;
+
 module router_tb ;
 logic clk, rst_n;
 logic[3:0] location;
@@ -21,7 +23,7 @@ router dut(
 );
 
 initial begin
-  $dumpfile("router_tb.fst");
+  $dumpfile("router_tb.vcd");
   $dumpvars(0, router_tb);
 end
 
@@ -69,6 +71,9 @@ initial begin
   south_in = '0;
   local_in = '0;
 
+  //The location of the testing router
+  location = 4'b1010;
+
   //restarting the module
   rst_n = 0;
   repeat (2) @(posedge clk);  // hold reset across at least one full edge
@@ -76,14 +81,61 @@ initial begin
   @(posedge clk);
   #1;
 
-  //The location of the testing router
-  location = 4'b1010;
-
+  $display(" ");
+  $display("Send emptly packages to all inputs at once");
+  drive_and_print(EAST, 37'b0000000000000000000000000000000000000);
+  drive_and_print(WEST, 37'b0000000000000000000000000000000000000);
+  drive_and_print(NORTH, 37'b0000000000000000000000000000000000000);
+  drive_and_print(SOUTH, 37'b0000000000000000000000000000000000000);
   drive_and_print(LOCAL, 37'b0000000000000000000000000000000000000);
-  drive_and_print(LOCAL, 37'b0001100000000000000000000000000000000);
-  drive_and_print(LOCAL, 37'b1001100000000000000000000000000000000);
-  drive_and_print(LOCAL, 37'b1000100000000000000000000000000000000);
-  drive_and_print(LOCAL, 37'b1111100000000000000000000000000000000);
+  $display(" ");
+
+  $display("Send emptly packages to all inputs one by one");
+  drive_and_print(EAST, 37'b0000000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(WEST, 37'b0000000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(NORTH, 37'b0000000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(SOUTH, 37'b0000000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(LOCAL, 37'b0000000000000000000000000000000000000);
+  $display(" ");
+
+  $display("Testing all 16 possible headers one by one from east");
+  drive_and_print(EAST, 37'b1000000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1000100000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1001000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1001100000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1010000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1010100000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1011000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1011100000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1100000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1100100000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1101000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1101100000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1110000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1110100000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1111000000000000000000000000000000000);
+  @(posedge clk);
+  drive_and_print(EAST, 37'b1111100000000000000000000000000000000);
+  @(posedge clk);
+  $display(" ");
 
   $finish;
 end

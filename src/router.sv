@@ -18,14 +18,6 @@ module router (
   output logic[36:0] local_out
 );
 
-  //selects which input are assigned to an output
-  //0XX -> the output should be 37'd0
-  //1YY -> output is the input if address YY
-  logic[2:0] selE;
-  logic[2:0] selW;
-  logic[2:0] selN;
-  logic[2:0] selS;
-  logic[2:0] selL;
 
   //Creating all registers and wiring them to their outputs
   logic[36:0] east_reg;
@@ -113,19 +105,19 @@ module router (
       end
       // determining which package moves south
       if(east_in[36] == 1'b1 && east_in[33:32] == location[1:0]) begin
-        if(east_in[35:34] < location[3:2] && east_in[33:32] != 2'b00) begin
+        if(east_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
           south_reg <= east_in;
         end
       end else if(west_in[36] == 1'b1 && west_in[33:32] == location[1:0]) begin
-        if(west_in[35:34] < location[3:2] && east_in[33:32] != 2'b00) begin
+        if(west_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
           south_reg <= west_in;
         end
       end else if(north_in[36] == 1'b1 && north_in[33:32] == location[1:0]) begin
-        if(north_in[35:34] < location[3:2] && east_in[33:32] != 2'b00) begin
+        if(north_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
           south_reg <= north_in;
         end
       end else if(local_in[36] == 1'b1 && local_in[33:32] == location[1:0]) begin
-        if(local_in[35:34] < location[3:2] && east_in[33:32] != 2'b00) begin
+        if(local_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
           south_reg <= local_in;
         end
       end
