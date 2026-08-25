@@ -92,7 +92,7 @@ jobs:
             verilator/verilator:v5.050 \
             --binary \
             --timing \
-            --trace-fst \
+            --trace-vcd \
             -Wno-fatal \
             --top-module "${TESTBENCH}" \
             --Mdir "build/${TESTBENCH}" \
@@ -121,5 +121,5 @@ jobs:
         with:
           name: waveform-${{ matrix.test }}
           path: |
-            **/*.fst
+            **/*.vcd
           if-no-files-found: warn
