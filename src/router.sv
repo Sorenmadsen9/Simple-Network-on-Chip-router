@@ -109,15 +109,15 @@ module router (
           south_reg <= east_in;
         end
       end else if(west_in[36] == 1'b1 && west_in[33:32] == location[1:0]) begin
-        if(west_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
+        if(west_in[35:34] < location[3:2] && west_in[35:34] != 2'b00) begin
           south_reg <= west_in;
         end
       end else if(north_in[36] == 1'b1 && north_in[33:32] == location[1:0]) begin
-        if(north_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
+        if(north_in[35:34] < location[3:2] && north_in[35:34] != 2'b00) begin
           south_reg <= north_in;
         end
       end else if(local_in[36] == 1'b1 && local_in[33:32] == location[1:0]) begin
-        if(local_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
+        if(local_in[35:34] < location[3:2] && local_in[35:34] != 2'b00) begin
           south_reg <= local_in;
         end
       end
