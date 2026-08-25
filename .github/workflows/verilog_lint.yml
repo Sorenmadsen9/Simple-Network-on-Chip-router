@@ -37,6 +37,7 @@ jobs:
             -w /work \
             verilator/verilator:v5.050 \
             --lint-only \
+            -Wall \
             -Wno-fatal \
             "${SOURCES[@]}"
 
