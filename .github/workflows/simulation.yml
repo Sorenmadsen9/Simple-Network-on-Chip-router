@@ -1,0 +1,125 @@
+name: SystemVerilog Simulation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    name: Discover Testbenches
+    runs-on: ubuntu-22.04
+
+    outputs:
+      tests: ${{ steps.find-tests.outputs.tests }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Find Testbenches
+        id: find-tests
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mapfile -t TESTS < <(
+            find tb \
+              -maxdepth 1 \
+              -type f \
+              -name "*_tb.sv" \
+              -printf "%f\n" \
+            | sed 's/\.sv$//' \
+            | sort
+          )
+
+          if [ "${#TESTS[@]}" -eq 0 ]; then
+            echo "No testbenches found in tb/"
+            exit 1
+          fi
+
+          JSON=$(printf '%s\n' "${TESTS[@]}" | jq -R . | jq -s -c .)
+
+          echo "Found testbenches:"
+          printf '  %s\n' "${TESTS[@]}"
+
+          echo "tests=$JSON" >> "$GITHUB_OUTPUT"
+
+  simulate:
+    name: Simulate ${{ matrix.test }}
+    runs-on: ubuntu-22.04
+    needs: discover
+
+    strategy:
+      fail-fast: false
+      matrix:
+        test: ${{ fromJSON(needs.discover.outputs.tests) }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Testbench
+        shell: bash
+        env:
+          TESTBENCH: ${{ matrix.test }}
+        run: |
+          set -euo pipefail
+
+          mapfile -d '' SOURCES < <(
+            find src \
+              -type f \
+              \( -name "*.sv" -o -name "*.v" \) \
+              -print0
+          )
+
+          if [ "${#SOURCES[@]}" -eq 0 ]; then
+            echo "No source files found in src/"
+            exit 1
+          fi
+
+          TB_FILE="tb/${TESTBENCH}.sv"
+
+          echo "Building ${TB_FILE}"
+
+          mkdir -p "build/${TESTBENCH}"
+
+          docker run --rm \
+            -v "$PWD:/work" \
+            -w /work \
+            verilator/verilator:v5.050 \
+            --binary \
+            --timing \
+            --trace-fst \
+            -Wno-fatal \
+            --top-module "${TESTBENCH}" \
+            --Mdir "build/${TESTBENCH}" \
+            "${SOURCES[@]}" \
+            "${TB_FILE}"
+
+      - name: Run Testbench
+        shell: bash
+        env:
+          TESTBENCH: ${{ matrix.test }}
+        run: |
+          set -euo pipefail
+
+          echo "Running ${TESTBENCH}"
+
+          docker run --rm \
+            -v "$PWD:/work" \
+            -w /work \
+            --entrypoint /bin/bash \
+            verilator/verilator:v5.050 \
+            -lc "./build/${TESTBENCH}/V${TESTBENCH}"
+
+      - name: Upload Waveform
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: waveform-${{ matrix.test }}
+          path: |
+            **/*.fst
+          if-no-files-found: warn
