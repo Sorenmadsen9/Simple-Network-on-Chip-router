@@ -177,17 +177,15 @@ initial begin
   @(posedge clk);
   #1;
 
-//Testing sending in packages one by one and watch the output
-  send_flit_and_wait(A,H,36'b00000000000000000000000000000000);
-  send_flit_and_wait(H,B,36'b00100000000000000000000000000000);
-  send_flit_and_wait(E,G,36'b01000000000000000000000000000000);
-  send_flit_and_wait(C,A,36'b01100000000000000000000000000000);
-  send_flit_and_wait(B,G,36'b10000000000000000000000000000000);
-  send_flit_and_wait(G,C,36'b10100000000000000000000000000000);
-  send_flit_and_wait(F,D,36'b11000000000000000000000000000000);
-  send_flit_and_wait(F,F,36'b11100000000000000000000000000000);
-
-
+//Sending in packages one by one and watch the output
+  send_flit_and_wait(A,H,32'b0000000000000000000000000000);
+  send_flit_and_wait(H,B,32'b0010000000000000000000000000);
+  send_flit_and_wait(E,G,32'b0100000000000000000000000000);
+  send_flit_and_wait(C,A,32'b0110000000000000000000000000);
+  send_flit_and_wait(B,G,32'b1000000000000000000000000000);
+  send_flit_and_wait(G,C,32'b1010000000000000000000000000);
+  send_flit_and_wait(F,D,32'b1100000000000000000000000000);
+  send_flit_and_wait(F,F,32'b1110000000000000000000000000);  
 
   $finish;
 
