@@ -131,8 +131,8 @@ module router (
         local_reg <= north_in;
       end else if(south_in[36] == 1'b1 && south_in[35:32] == location[3:0]) begin
         local_reg <= south_in;
+      end
     end
   end
-
 
 endmodule
