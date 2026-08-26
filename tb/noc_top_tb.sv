@@ -55,7 +55,7 @@ task automatic print_input_and_output();
 endtask
 
 // port enum for helper tasks
-typedef enum {A, B, C, D, E, F, G, H, I} router;
+typedef enum {A, B, C, D, E, F, G, H, I, ALL} address;
 
 /*
 Task to send one package from one router to another
@@ -65,7 +65,7 @@ in is the router where the package is inserted
 out is the router destination for the package
 pkt contains the valid, header and payload
 */
-task automatic send_flit(input router in, input router out, input logic[31:0] payload);
+task automatic send_flit(input address in, input address out, input logic[31:0] payload);
 
   //Creating the package
   logic[36:0] pack;
@@ -81,6 +81,7 @@ task automatic send_flit(input router in, input router out, input logic[31:0] pa
     G:  pack[35:32] = 4'b1101;
     H:  pack[35:32] = 4'b1110;
     I:  pack[35:32] = 4'b1111;
+    ALL: pack[35:32] = 4'b0000;
     default: pack[35:32] = 4'b0000;  // should never happen
   endcase
 
@@ -95,10 +96,12 @@ task automatic send_flit(input router in, input router out, input logic[31:0] pa
     G:  local_in_g  = pack;
     H:  local_in_h  = pack;
     I:  local_in_i  = pack;
+    ALL: pack = '0;
     default: pack = '0;  // should never happen
   endcase
-
 endtask
+
+
 
 initial begin
   //Setting the initial value of all inputs
