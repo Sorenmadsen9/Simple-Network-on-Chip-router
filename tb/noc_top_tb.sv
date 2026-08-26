@@ -52,9 +52,54 @@ task automatic print_input_and_output();
   $display("    g=%b h=%b i=%b     |      g=%b h=%b i=%b",
               local_in_g[36:30], local_in_h[36:30], local_in_i[36:30],
               local_out_g[36:30], local_out_h[36:30], local_out_i[36:30]);
-
 endtask
 
+// port enum for helper tasks
+typedef enum {A, B, C, D, E, F, G, H, I, ALL} address_e;
+
+/*
+Task to send one package from one router to another
+
+inputs:
+in is the router where the package is inserted
+out is the router destination for the package
+pkt contains the valid, header and payload
+*/
+task automatic send_flit(input address_e in, input address_e out, input logic[31:0] payload);
+
+  //Creating the package
+  logic[36:0] pack;
+  pack[36] = 1'b1;
+  pack[31:0] = payload[31:0];
+  case(out)
+    A:  pack[35:32] = 4'b0101;
+    B:  pack[35:32] = 4'b0110;
+    C:  pack[35:32] = 4'b0111;
+    D:  pack[35:32] = 4'b1001;
+    E:  pack[35:32] = 4'b1010;
+    F:  pack[35:32] = 4'b1011;
+    G:  pack[35:32] = 4'b1101;
+    H:  pack[35:32] = 4'b1110;
+    I:  pack[35:32] = 4'b1111;
+    ALL: pack[35:32] = 4'b0000;
+    default: pack[35:32] = 4'b0000;  // should never happen
+  endcase
+
+  //Inserting the package to the correct router
+  case(in)
+    A:  local_in_a  = pack;
+    B:  local_in_b  = pack;
+    C:  local_in_c  = pack;
+    D:  local_in_d  = pack;
+    E:  local_in_e  = pack;
+    F:  local_in_f  = pack;
+    G:  local_in_g  = pack;
+    H:  local_in_h  = pack;
+    I:  local_in_i  = pack;
+    ALL: pack = '0;
+    default: pack = '0;  // should never happen
+  endcase
+endtask
 
 initial begin
   //Setting the initial value of all inputs
@@ -75,13 +120,11 @@ initial begin
   @(posedge clk);
   #1;
 
-  local_in_a = 37'b1111100000000000000000000000000000000;
+  send_flit(A,C,00000000000000000000000000000000);
   #10;
   print_input_and_output();
-  @(posedge clk);
   local_in_a = 37'b0000000000000000000000000000000000000;
   #1;
-  print_input_and_output();
   @(posedge clk);
   print_input_and_output();
   @(posedge clk);
