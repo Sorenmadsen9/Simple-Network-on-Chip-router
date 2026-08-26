@@ -42,12 +42,15 @@ end
 
 // Small task to just print all the input and output values
 task automatic print_input_and_output();
-  $display("Time=%0t   a=%b b=%b c=%b d=%b e=%b f=%b g=%b h=%b i=%b | a=%b b=%b c=%b d=%b e=%b f=%b g=%b h=%b i=%b",
+  $display("Time=%0t   a=%b b=%b c=%b d=%b e=%b f=%b g=%b h=%b i=%b
+            | a=%b b=%b c=%b d=%b e=%b f=%b g=%b h=%b i=%b",
             $time,
-            local_in_a[36:32], local_in_b[36:32], local_in_c[36:32], local_in_d[36:32], local_in_e[36:32],
-            local_in_f[36:32], local_in_g[36:32], local_in_h[36:32], local_in_i[36:32],
-            local_out_a[36:32], local_out_b[36:32], local_out_c[36:32], local_out_d[36:32], local_out_e[36:32],
-            local_out_f[36:32], local_out_g[36:32], local_out_h[36:32], local_out_i[36:32]);
+            local_in_a[36:32], local_in_b[36:32], local_in_c[36:32], 
+            local_in_d[36:32], local_in_e[36:32], local_in_f[36:32], 
+            local_in_g[36:32], local_in_h[36:32], local_in_i[36:32],
+            local_out_a[36:32], local_out_b[36:32], local_out_c[36:32], 
+            local_out_d[36:32], local_out_e[36:32], local_out_f[36:32], 
+            local_out_g[36:32], local_out_h[36:32], local_out_i[36:32]);
 endtask
 
 
