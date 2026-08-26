@@ -61,14 +61,19 @@ endtask
 task automatic print_in_out_X6();
   print_in_out();
   @(posedge clk);
+  #1;
   print_in_out();
   @(posedge clk);
+  #1;
   print_in_out();
   @(posedge clk);
+  #1;
   print_in_out();
   @(posedge clk);
+  #1;
   print_in_out();
   @(posedge clk);
+  #1;
   print_in_out();
 endtask
 
@@ -157,6 +162,152 @@ task automatic clear(input address_e in);
   endcase
 endtask
 
+task automatic test_sending_one_package_at_a_time();
+
+  send_flit_and_wait(A,H,32'b00000000_00000000_00000000_00000000);
+  send_flit_and_wait(H,B,32'b00100000_00000000_00000000_00000000);
+  send_flit_and_wait(E,G,32'b01000000_00000000_00000000_00000000);
+  send_flit_and_wait(C,A,32'b01100000_00000000_00000000_00000000);
+  send_flit_and_wait(B,G,32'b10000000_00000000_00000000_00000000);
+  send_flit_and_wait(G,C,32'b10100000_00000000_00000000_00000000);
+  send_flit_and_wait(F,D,32'b11000000_00000000_00000000_00000000);
+  send_flit_and_wait(F,F,32'b11100000_00000000_00000000_00000000);
+endtask
+
+task automatic test_simple_row_and_column();
+
+  //Sending in multiple packages at once
+  $display(" ");
+  $display("Sending one pacakge east through each row");
+  $display(" ");
+  send_flit(A,C,32'b00100000_00000000_00000000_00000000);
+  send_flit(D,F,32'b01000000_00000000_00000000_00000000);
+  send_flit(G,I,32'b10000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+
+  $display(" ");
+  $display("Sending one pacakge west through each row");
+  $display(" ");
+  send_flit(C,A,32'b00100000_00000000_00000000_00000000);
+  send_flit(F,D,32'b01000000_00000000_00000000_00000000);
+  send_flit(I,G,32'b10000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+
+  $display(" ");
+  $display("Sending one pacakge south through each column");
+  $display(" ");
+  send_flit(A,G,32'b00100000_00000000_00000000_00000000);
+  send_flit(B,H,32'b01000000_00000000_00000000_00000000);
+  send_flit(C,I,32'b10000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+
+  $display(" ");
+  $display("Sending one pacakge north through each column");
+  $display(" ");
+  send_flit(G,A,32'b00100000_00000000_00000000_00000000);
+  send_flit(H,B,32'b01000000_00000000_00000000_00000000);
+  send_flit(I,C,32'b10000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+endtask
+
+task automatic test_simultaneously_row_and_column();
+
+  $display(" ");
+  $display("Sending one pacakge past each other through each row");
+  $display(" ");
+  send_flit(A,C,32'b00100000_00000000_00000000_00000000);
+  send_flit(D,F,32'b01000000_00000000_00000000_00000000);
+  send_flit(G,I,32'b01100000_00000000_00000000_00000000);
+  send_flit(C,A,32'b10000000_00000000_00000000_00000000);
+  send_flit(F,D,32'b10100000_00000000_00000000_00000000);
+  send_flit(I,G,32'b11000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+
+  $display(" ");
+  $display("Sending one pacakge past each other through each column");
+  $display(" ");
+  send_flit(A,G,32'b00100000_00000000_00000000_00000000);
+  send_flit(B,H,32'b01000000_00000000_00000000_00000000);
+  send_flit(C,I,32'b01100000_00000000_00000000_00000000);
+  send_flit(G,A,32'b10000000_00000000_00000000_00000000);
+  send_flit(H,B,32'b10100000_00000000_00000000_00000000);
+  send_flit(I,C,32'b11000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+endtask
+
+task automatic test_simultaneously_row_and_column_with_delay();
+
+  $display(" ");
+  $display("First sending packages east, next cc west, then south and lastly north");
+  $display(" ");
+  send_flit(A,C,32'b00100000_00000000_00000000_00000000);
+  send_flit(D,F,32'b01000000_00000000_00000000_00000000);
+  send_flit(G,I,32'b01100000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  send_flit(C,A,32'b10000000_00000000_00000000_00000000);
+  send_flit(F,D,32'b10100000_00000000_00000000_00000000);
+  send_flit(I,G,32'b11000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  send_flit(A,G,32'b00100000_00000000_00000000_00000000);
+  send_flit(B,H,32'b01000000_00000000_00000000_00000000);
+  send_flit(C,I,32'b01100000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  send_flit(G,A,32'b10000000_00000000_00000000_00000000);
+  send_flit(H,B,32'b10100000_00000000_00000000_00000000);
+  send_flit(I,C,32'b11000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  print_in_out_X6();
+endtask
 
 initial begin
   //Setting the initial value of all inputs
@@ -177,15 +328,13 @@ initial begin
   @(posedge clk);
   #1;
 
-//Sending in packages one by one and watch the output
-  send_flit_and_wait(A,H,32'b0000000000000000000000000000);
-  send_flit_and_wait(H,B,32'b0010000000000000000000000000);
-  send_flit_and_wait(E,G,32'b0100000000000000000000000000);
-  send_flit_and_wait(C,A,32'b0110000000000000000000000000);
-  send_flit_and_wait(B,G,32'b1000000000000000000000000000);
-  send_flit_and_wait(G,C,32'b1010000000000000000000000000);
-  send_flit_and_wait(F,D,32'b1100000000000000000000000000);
-  send_flit_and_wait(F,F,32'b1110000000000000000000000000);
+/*
+Premade tests can be run through the following functions
+*/
+//test_sending_one_package_at_a_time();
+//test_simple_row_and_column();
+//test_simultaneously_row_and_column();
+test_simultaneously_row_and_column_with_delay();
 
   $finish;
 
