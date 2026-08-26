@@ -30,47 +30,57 @@ noc_top dut(
   .local_out_i(local_out_i)
 );
 
+
 initial begin
   $dumpfile("noc_top_tb.vcd");
   $dumpvars(0, noc_top_tb);
 end
+
 
 initial begin
   clk = 0;
   forever #5 clk = ~clk;
 end
 
+
 // Small task to just print all the input and output values
 task automatic print_in_out();
   $display(" ");
   $display("IN: a=%b b=%b c=%b     | OUT: a=%b b=%b c=%b     Time=%0t",
-              local_in_a[36:30], local_in_b[36:30], local_in_c[36:30],
-              local_out_a[36:30], local_out_b[36:30], local_out_c[36:30], $time);
+              local_in_a[36:29], local_in_b[36:29], local_in_c[36:29],
+              local_out_a[36:29], local_out_b[36:29], local_out_c[36:29], $time);
   $display("    d=%b e=%b f=%b     |      d=%b e=%b f=%b",
-              local_in_d[36:30], local_in_e[36:30], local_in_f[36:30],
-              local_out_d[36:30], local_out_e[36:30], local_out_f[36:30]);
+              local_in_d[36:29], local_in_e[36:29], local_in_f[36:29],
+              local_out_d[36:29], local_out_e[36:29], local_out_f[36:29]);
   $display("    g=%b h=%b i=%b     |      g=%b h=%b i=%b",
-              local_in_g[36:30], local_in_h[36:30], local_in_i[36:30],
-              local_out_g[36:30], local_out_h[36:30], local_out_i[36:30]);
+              local_in_g[36:29], local_in_h[36:29], local_in_i[36:29],
+              local_out_g[36:29], local_out_h[36:29], local_out_i[36:29]);
 endtask
+
 
 task automatic print_in_out_X6();
   print_in_out();
   @(posedge clk);
+  #1;
   print_in_out();
   @(posedge clk);
+  #1;
   print_in_out();
   @(posedge clk);
+  #1;
   print_in_out();
   @(posedge clk);
+  #1;
   print_in_out();
   @(posedge clk);
+  #1;
   print_in_out();
 endtask
 
 
 // port enum for helper tasks
 typedef enum {A, B, C, D, E, F, G, H, I, ALL} address_e;
+
 
 /*
 Task to send one package from one router to another
@@ -117,12 +127,13 @@ task automatic send_flit(input address_e in, input address_e out, input logic[31
   endcase
 endtask
 
-task automatic send_one_flit(input address_e in, input address_e out, input logic[31:0] payload);
+
+task automatic send_flit_and_wait(input address_e in, input address_e out, input logic[31:0] payload);
 
   clear(ALL);
   @(posedge clk);
   #1;
-  send_flit(in,out,payload);
+  send_flit(in,out,payload[31:0]);
   #1;
   print_in_out();
   @(posedge clk);
@@ -131,6 +142,7 @@ task automatic send_one_flit(input address_e in, input address_e out, input logi
   print_in_out_X6();
 
 endtask
+
 
 task automatic clear(input address_e in);
     case(in)
@@ -148,6 +160,153 @@ task automatic clear(input address_e in);
     default: {local_in_a, local_in_b, local_in_c, local_in_d, local_in_e,
           local_in_f, local_in_g, local_in_h, local_in_i} = '0;  // should never happen
   endcase
+endtask
+
+task automatic test_sending_one_package_at_a_time();
+
+  send_flit_and_wait(A,H,32'b00000000_00000000_00000000_00000000);
+  send_flit_and_wait(H,B,32'b00100000_00000000_00000000_00000000);
+  send_flit_and_wait(E,G,32'b01000000_00000000_00000000_00000000);
+  send_flit_and_wait(C,A,32'b01100000_00000000_00000000_00000000);
+  send_flit_and_wait(B,G,32'b10000000_00000000_00000000_00000000);
+  send_flit_and_wait(G,C,32'b10100000_00000000_00000000_00000000);
+  send_flit_and_wait(F,D,32'b11000000_00000000_00000000_00000000);
+  send_flit_and_wait(F,F,32'b11100000_00000000_00000000_00000000);
+endtask
+
+task automatic test_simple_row_and_column();
+
+  //Sending in multiple packages at once
+  $display(" ");
+  $display("Sending one pacakge east through each row");
+  $display(" ");
+  send_flit(A,C,32'b00100000_00000000_00000000_00000000);
+  send_flit(D,F,32'b01000000_00000000_00000000_00000000);
+  send_flit(G,I,32'b10000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+
+  $display(" ");
+  $display("Sending one pacakge west through each row");
+  $display(" ");
+  send_flit(C,A,32'b00100000_00000000_00000000_00000000);
+  send_flit(F,D,32'b01000000_00000000_00000000_00000000);
+  send_flit(I,G,32'b10000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+
+  $display(" ");
+  $display("Sending one pacakge south through each column");
+  $display(" ");
+  send_flit(A,G,32'b00100000_00000000_00000000_00000000);
+  send_flit(B,H,32'b01000000_00000000_00000000_00000000);
+  send_flit(C,I,32'b10000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+
+  $display(" ");
+  $display("Sending one pacakge north through each column");
+  $display(" ");
+  send_flit(G,A,32'b00100000_00000000_00000000_00000000);
+  send_flit(H,B,32'b01000000_00000000_00000000_00000000);
+  send_flit(I,C,32'b10000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+endtask
+
+task automatic test_simultaneously_row_and_column();
+
+  $display(" ");
+  $display("Sending one pacakge past each other through each row");
+  $display(" ");
+  send_flit(A,C,32'b00100000_00000000_00000000_00000000);
+  send_flit(D,F,32'b01000000_00000000_00000000_00000000);
+  send_flit(G,I,32'b01100000_00000000_00000000_00000000);
+  send_flit(C,A,32'b10000000_00000000_00000000_00000000);
+  send_flit(F,D,32'b10100000_00000000_00000000_00000000);
+  send_flit(I,G,32'b11000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+
+  $display(" ");
+  $display("Sending one pacakge past each other through each column");
+  $display(" ");
+  send_flit(A,G,32'b00100000_00000000_00000000_00000000);
+  send_flit(B,H,32'b01000000_00000000_00000000_00000000);
+  send_flit(C,I,32'b01100000_00000000_00000000_00000000);
+  send_flit(G,A,32'b10000000_00000000_00000000_00000000);
+  send_flit(H,B,32'b10100000_00000000_00000000_00000000);
+  send_flit(I,C,32'b11000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  print_in_out_X6();
+endtask
+
+task automatic test_simultaneously_row_and_column_with_delay();
+
+  $display(" ");
+  $display("First sending packages east, next cc west, then south and lastly north");
+  $display(" ");
+  send_flit(A,C,32'b00100000_00000000_00000000_00000000);
+  send_flit(D,F,32'b01000000_00000000_00000000_00000000);
+  send_flit(G,I,32'b01100000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  send_flit(C,A,32'b10000000_00000000_00000000_00000000);
+  send_flit(F,D,32'b10100000_00000000_00000000_00000000);
+  send_flit(I,G,32'b11000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  send_flit(A,G,32'b00100000_00000000_00000000_00000000);
+  send_flit(B,H,32'b01000000_00000000_00000000_00000000);
+  send_flit(C,I,32'b01100000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  send_flit(G,A,32'b10000000_00000000_00000000_00000000);
+  send_flit(H,B,32'b10100000_00000000_00000000_00000000);
+  send_flit(I,C,32'b11000000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  print_in_out_X6();
 endtask
 
 initial begin
@@ -169,16 +328,13 @@ initial begin
   @(posedge clk);
   #1;
 
-  send_one_flit(A,H,00000000000000000000000000000000);
-  send_one_flit(H,B,00000000000000000000000000000000);
-  send_one_flit(E,G,00000000000000000000000000000000);
-  send_one_flit(C,A,00000000000000000000000000000000);
-  send_one_flit(B,G,00000000000000000000000000000000);
-  send_one_flit(G,C,00000000000000000000000000000000);
-  send_one_flit(C,D,00000000000000000000000000000000);
-  send_one_flit(F,B,00000000000000000000000000000000);
-  send_one_flit(F,F,00000000000000000000000000000000);
-
+/*
+Premade tests can be run through the following functions
+*/
+//test_sending_one_package_at_a_time();
+//test_simple_row_and_column();
+//test_simultaneously_row_and_column();
+test_simultaneously_row_and_column_with_delay();
 
   $finish;
 
