@@ -41,7 +41,7 @@ initial begin
 end
 
 // Small task to just print all the input and output values
-task automatic print_input_and_output();
+task automatic print_in_out();
   $display(" ");
   $display("IN: a=%b b=%b c=%b     | OUT: a=%b b=%b c=%b     Time=%0t",
               local_in_a[36:30], local_in_b[36:30], local_in_c[36:30],
@@ -53,6 +53,21 @@ task automatic print_input_and_output();
               local_in_g[36:30], local_in_h[36:30], local_in_i[36:30],
               local_out_g[36:30], local_out_h[36:30], local_out_i[36:30]);
 endtask
+
+task automatic print_in_out_X6();
+  print_in_out();
+  @(posedge clk);
+  print_in_out();
+  @(posedge clk);
+  print_in_out();
+  @(posedge clk);
+  print_in_out();
+  @(posedge clk);
+  print_in_out();
+  @(posedge clk);
+  print_in_out();
+endtask
+
 
 // port enum for helper tasks
 typedef enum {A, B, C, D, E, F, G, H, I, ALL} address_e;
@@ -96,8 +111,42 @@ task automatic send_flit(input address_e in, input address_e out, input logic[31
     G:  local_in_g  = pack;
     H:  local_in_h  = pack;
     I:  local_in_i  = pack;
-    ALL: pack = '0;
+    ALL: {local_in_a, local_in_b, local_in_c, local_in_d, local_in_e,
+          local_in_f, local_in_g, local_in_h, local_in_i} = pack;
     default: pack = '0;  // should never happen
+  endcase
+endtask
+
+task automatic send_one_flit(input address_e in, input address_e out, input logic[31:0] payload);
+
+  clear(ALL);
+  @(posedge clk);
+  #1;
+  send_flit(in,out,payload);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(in);
+  print_in_out_X6();
+
+endtask
+
+task automatic clear(input address_e in);
+    case(in)
+    A:  local_in_a  = '0;
+    B:  local_in_b  = '0;
+    C:  local_in_c  = '0;
+    D:  local_in_d  = '0;
+    E:  local_in_e  = '0;
+    F:  local_in_f  = '0;
+    G:  local_in_g  = '0;
+    H:  local_in_h  = '0;
+    I:  local_in_i  = '0;
+    ALL: {local_in_a, local_in_b, local_in_c, local_in_d, local_in_e,
+          local_in_f, local_in_g, local_in_h, local_in_i} = '0;
+    default: {local_in_a, local_in_b, local_in_c, local_in_d, local_in_e,
+          local_in_f, local_in_g, local_in_h, local_in_i} = '0;  // should never happen
   endcase
 endtask
 
@@ -120,26 +169,18 @@ initial begin
   @(posedge clk);
   #1;
 
-  send_flit(A,C,00000000000000000000000000000000);
-  #10;
-  print_input_and_output();
-  local_in_a = 37'b0000000000000000000000000000000000000;
-  #1;
-  @(posedge clk);
-  print_input_and_output();
-  @(posedge clk);
-  print_input_and_output();
-  @(posedge clk);
-  print_input_and_output();
-  @(posedge clk);
-  print_input_and_output();
-  @(posedge clk);
-  print_input_and_output();
-  @(posedge clk);
-  print_input_and_output();
-  @(posedge clk);
-
-
+/*
+  send_one_flit(A,H,00000000000000000000000000000000);
+  send_one_flit(H,B,00000000000000000000000000000000);
+  send_one_flit(E,G,00000000000000000000000000000000);
+  send_one_flit(C,A,00000000000000000000000000000000);
+  send_one_flit(B,G,00000000000000000000000000000000);
+  send_one_flit(G,C,00000000000000000000000000000000);
+  send_one_flit(C,D,00000000000000000000000000000000);
+  send_one_flit(F,B,00000000000000000000000000000000);
+  send_one_flit(F,F,00000000000000000000000000000000);
+*/
+  send_one_flit(E,G,00000000000000000000000000000000);
 
   $finish;
 
