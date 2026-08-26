@@ -185,7 +185,7 @@ initial begin
   send_flit_and_wait(B,G,32'b1000000000000000000000000000);
   send_flit_and_wait(G,C,32'b1010000000000000000000000000);
   send_flit_and_wait(F,D,32'b1100000000000000000000000000);
-  send_flit_and_wait(F,F,32'b1110000000000000000000000000);  
+  send_flit_and_wait(F,F,32'b1110000000000000000000000000);
 
   $finish;
 
