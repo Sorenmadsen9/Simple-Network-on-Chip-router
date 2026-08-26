@@ -104,37 +104,37 @@ module router (
       end
       // determining which package moves north
       if(east_in[36] == 1'b1 && east_in[33:32] == location[1:0]) begin
-        if(east_in[35:34] > location[3:2]) begin
+        if(east_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
           north_reg <= east_in;
         end
       end else if(west_in[36] == 1'b1 && west_in[33:32] == location[1:0]) begin
-        if(west_in[35:34] > location[3:2]) begin
+        if(west_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
           north_reg <= west_in;
         end
       end else if(south_in[36] == 1'b1 && south_in[33:32] == location[1:0]) begin
-        if(south_in[35:34] > location[3:2]) begin
+        if(south_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
           north_reg <= south_in;
         end
       end else if(local_in[36] == 1'b1 && local_in[33:32] == location[1:0]) begin
-        if(local_in[35:34] > location[3:2]) begin
+        if(local_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
           north_reg <= local_in;
         end
       end
       // determining which package moves south
       if(east_in[36] == 1'b1 && east_in[33:32] == location[1:0]) begin
-        if(east_in[35:34] < location[3:2] && east_in[35:34] != 2'b00) begin
+        if(east_in[35:34] > location[3:2]) begin
           south_reg <= east_in;
         end
       end else if(west_in[36] == 1'b1 && west_in[33:32] == location[1:0]) begin
-        if(west_in[35:34] < location[3:2] && west_in[35:34] != 2'b00) begin
+        if(west_in[35:34] > location[3:2]) begin
           south_reg <= west_in;
         end
       end else if(north_in[36] == 1'b1 && north_in[33:32] == location[1:0]) begin
-        if(north_in[35:34] < location[3:2] && north_in[35:34] != 2'b00) begin
+        if(north_in[35:34] > location[3:2]) begin
           south_reg <= north_in;
         end
       end else if(local_in[36] == 1'b1 && local_in[33:32] == location[1:0]) begin
-        if(local_in[35:34] < location[3:2] && local_in[35:34] != 2'b00) begin
+        if(local_in[35:34] > location[3:2]) begin
           south_reg <= local_in;
         end
       end
