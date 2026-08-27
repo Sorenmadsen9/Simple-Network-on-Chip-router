@@ -122,7 +122,7 @@ task automatic send_flit(input address_e in, input address_e out, input logic[31
     H:  local_in_h  = pack;
     I:  local_in_i  = pack;
     ALL: {local_in_a, local_in_b, local_in_c, local_in_d, local_in_e,
-          local_in_f, local_in_g, local_in_h, local_in_i} = pack;
+          local_in_f, local_in_g, local_in_h, local_in_i} = {9{pack}};
     default: pack = '0;  // should never happen
   endcase
 endtask
@@ -162,6 +162,7 @@ task automatic clear(input address_e in);
   endcase
 endtask
 
+
 task automatic test_sending_one_package_at_a_time();
 
   send_flit_and_wait(A,H,32'b00000000_00000000_00000000_00000000);
@@ -173,6 +174,7 @@ task automatic test_sending_one_package_at_a_time();
   send_flit_and_wait(F,D,32'b11000000_00000000_00000000_00000000);
   send_flit_and_wait(F,F,32'b11100000_00000000_00000000_00000000);
 endtask
+
 
 task automatic test_simple_row_and_column();
 
@@ -230,6 +232,7 @@ task automatic test_simple_row_and_column();
   print_in_out_X6();
 endtask
 
+
 task automatic test_simultaneously_row_and_column();
 
   $display(" ");
@@ -264,6 +267,7 @@ task automatic test_simultaneously_row_and_column();
   clear(ALL);
   print_in_out_X6();
 endtask
+
 
 task automatic test_simultaneously_row_and_column_with_delay();
 
@@ -308,6 +312,7 @@ task automatic test_simultaneously_row_and_column_with_delay();
   #1;
   print_in_out_X6();
 endtask
+
 
 /*
 Creating a bottleneck is referred to the scenario where two inputs
@@ -363,6 +368,7 @@ task automatic test_bottleneck();
   print_in_out_X6();
 endtask
 
+
 initial begin
   //Setting the initial value of all inputs
   local_in_a = '0;
@@ -392,7 +398,6 @@ Premade tests can be run through the following functions
 test_bottleneck();
 
   $finish;
-
 end
 
 endmodule
