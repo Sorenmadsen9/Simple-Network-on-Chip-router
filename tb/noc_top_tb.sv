@@ -128,7 +128,7 @@ task automatic send_flit(input address_e in, input address_e out, input logic[31
 endtask
 
 
-task automatic send_flit_and_wait(input address_e in, input address_e out, input logic[31:0] payload);
+task automatic send_flit_and_wait(input address_e in,input address_e out,input logic[31:0] payload);
 
   clear(ALL);
   @(posedge clk);
@@ -309,6 +309,60 @@ task automatic test_simultaneously_row_and_column_with_delay();
   print_in_out_X6();
 endtask
 
+/*
+Creating a bottleneck is referred to the scenario where two inputs
+both try to send a package to the same output in a router.
+This results in the router having to prioritice which package gets the output and which gets deleted
+*/
+task automatic test_bottleneck();
+  $display(" ");
+  $display("Sending two packages to the same location where they create a bottleneck");
+  $display(" ");
+  send_flit(A,E,32'b00000000_00000000_00000000_00000000);
+  send_flit(C,E,32'b00100000_00000000_00000000_00000000);
+  send_flit(G,B,32'b01000000_00000000_00000000_00000000);
+  send_flit(I,B,32'b01100000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  send_flit(D,B,32'b10000000_00000000_00000000_00000000);
+  send_flit(F,B,32'b10100000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  send_flit(D,H,32'b11000000_00000000_00000000_00000000);
+  send_flit(F,H,32'b11100000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  send_flit(D,B,32'b00000000_00000000_00000000_00000000);
+  send_flit(H,B,32'b00100000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  send_flit(B,H,32'b01000000_00000000_00000000_00000000);
+  send_flit(D,H,32'b01100000_00000000_00000000_00000000);
+  #1;
+  print_in_out();
+  @(posedge clk);
+  #1;
+  clear(ALL);
+  #1;
+  print_in_out_X6();
+endtask
+
 initial begin
   //Setting the initial value of all inputs
   local_in_a = '0;
@@ -334,7 +388,8 @@ Premade tests can be run through the following functions
 //test_sending_one_package_at_a_time();
 //test_simple_row_and_column();
 //test_simultaneously_row_and_column();
-test_simultaneously_row_and_column_with_delay();
+//test_simultaneously_row_and_column_with_delay();
+test_bottleneck();
 
   $finish;
 
