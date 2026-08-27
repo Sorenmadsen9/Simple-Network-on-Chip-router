@@ -128,7 +128,7 @@ task automatic send_flit(input address_e in, input address_e out, input logic[31
 endtask
 
 
-task automatic send_flit_and_wait(input address_e in, input address_e out, input logic[31:0] payload);
+task automatic send_flit_and_wait(input address_e in,input address_e out,input logic[31:0] payload);
 
   clear(ALL);
   @(posedge clk);
