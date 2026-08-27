@@ -310,7 +310,8 @@ task automatic test_simultaneously_row_and_column_with_delay();
 endtask
 
 /*
-Creating a bottleneck is referred to the scenario where two inputs both try to send a package to the same output in a router.
+Creating a bottleneck is referred to the scenario where two inputs
+both try to send a package to the same output in a router.
 This results in the router having to prioritice which package gets the output and which gets deleted
 */
 task automatic test_bottleneck();
